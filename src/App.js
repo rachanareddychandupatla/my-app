@@ -75,7 +75,37 @@ const App = () => {
   });
 
   const changeHandler = (e) => {
-    setPerson({ ...person, [e.target.name]: e.target.value });
+    let char = e.nativeEvent.data;
+    switch (e.target.name) {
+      case "name":
+        if (
+          (char >= "A" && char <= "Z") ||
+          (char >= "a" && char <= "z") ||
+          char === " " ||
+          char === null
+        ) {
+          setPerson({ ...person, [e.target.name]: e.target.value });
+        }
+        break;
+      case "mobileNumber":
+        if (char >= "0" && char <= "9") {
+          setPerson({ ...person, [e.target.name]: e.target.value });
+        }
+        break;
+      case "project":
+        if (
+          (char >= "A" && char <= "Z") ||
+          (char >= "a" && char <= "z") ||
+          (char >= "0" && char <= "9") ||
+          char === " " ||
+          char === null
+        ) {
+          setPerson({ ...person, [e.target.name]: e.target.value });
+        }
+        break;
+      default:
+        setPerson({ ...person, [e.target.name]: e.target.value });
+    }
   };
 
   const submitHandler = (e) => {
@@ -102,41 +132,58 @@ const App = () => {
                 className="nameTextBox"
                 type="text"
                 name="name"
-                placeholder="Enter Person Name ( 3-20 Chars only)"
+                placeholder="Enter Person Name (3-20 Chars only)"
                 value={name}
+                minLength={"3"}
+                maxLength={"20"}
                 onChange={changeHandler}
+                required
               />{" "}
               <br />
               <input
                 type="email"
                 name="email"
+                className="detailsTextBox"
                 placeholder="Enter A Valid E-mail ID"
                 value={email}
                 onChange={changeHandler}
+                required
               />{" "}
               &nbsp;
               <input
                 type="integer"
+                className="detailsTextBox"
                 name="mobileNumber"
                 placeholder="Enter A Valid Mobile Number"
                 value={mobileNumber}
+                minLength={"10"}
+                maxLength={"10"}
                 onChange={changeHandler}
+                required
               />{" "}
               <br />
               <input
+                className="nameTextBox"
                 type="text"
                 name="project"
                 placeholder="Enter Project Name( 3-20 Chars and Numbers only)"
+                minLength={"3"}
+                maxLength={"20"}
                 value={project}
                 onChange={changeHandler}
+                required
               />{" "}
               <br />
               <input
+                className="nameTextBox"
                 type="text"
                 name="taskDes"
                 value={taskDes}
+                minLength={"3"}
+                maxLength={"30"}
                 placeholder="Enter Task Description( 3-30 Chars/Num/Spl Char also)"
                 onChange={changeHandler}
+                required
               />{" "}
               <br />
               <input
@@ -145,14 +192,17 @@ const App = () => {
                 value={startDate}
                 placeholder="Start Date dd/mm/yy"
                 onChange={changeHandler}
+                required
               />{" "}
               &nbsp;
               <input
                 type="Date"
                 name="endDate"
                 value={endDate}
+                min={startDate}
                 placeholder="Target Date dd/mmyy"
                 onChange={changeHandler}
+                required
               />{" "}
               <br />
               <h3> Task status: </h3>
@@ -197,7 +247,7 @@ const App = () => {
                 className="view"
                 type="button"
                 name="view"
-                value="view"
+                value={view ? "hide" : "view"}
                 onClick={() => setView(!view)}
               />
             </div>

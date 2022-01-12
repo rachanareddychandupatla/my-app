@@ -23,3 +23,7 @@ input[placeholder] {
 .nameTextBox {
   min-width: 500px;
 }
+
+.detailsTextBox {
+  min-width: 300px;
+}
